@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET || 'super_secure_secret_key';
+const JWT_SECRET = process.env.JWT_SECRET || 'your_super_secure_secret_key_change_this_in_production';
 
 function protectByRole(allowedRoles) {
   return (req, res, next) => {

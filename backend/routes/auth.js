@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken');
 const { pool } = require('../db/postgres');
 const protectByRole = require('../middleware/auth');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'super_secure_secret_key';
+const JWT_SECRET = process.env.JWT_SECRET || 'your_super_secure_secret_key_change_this_in_production';
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '2h';
 
 router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
@@ -62,7 +63,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
       JWT_SECRET,
-      { expiresIn: '2h' }
+      { expiresIn: JWT_EXPIRES_IN }
     );
 
     res.json({
