@@ -7,6 +7,7 @@ const reservationRoutes = require('./routes/reservations');
 const classroomRoutes = require('./routes/classrooms');
 const subjectRoutes = require('./routes/subjects');
 const adminRoutes = require('./routes/admin');
+const { errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
 
@@ -45,5 +46,16 @@ app.get('/health', async (req, res) => {
     mongodb: mongodbStatus
   });
 });
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    error: 'Route not found'
+  });
+});
+
+// Global error handler (must be last)
+app.use(errorHandler);
 
 module.exports = app;
