@@ -27,14 +27,21 @@ router.post('/register', async (req, res) => {
 
     const newUser = result.rows[0];
 
+    const token = jwt.sign(
+      { id: newUser.id, email: newUser.email, role: newUser.role },
+      JWT_SECRET,
+      { expiresIn: JWT_EXPIRES_IN }
+    );
+
     return res.status(201).json({
       success: true,
       message: 'Teacher account created successfully.',
+      token,        
       user: {
         id: newUser.id,
         name: newUser.name,
         email: newUser.email,
-        role: newUser.role 
+        role: newUser.role
       }
     });
 
@@ -69,11 +76,11 @@ router.post('/login', async (req, res) => {
     res.json({
       success: true,
       token,
-      user: { 
-        id: user.id, 
-        name: user.name, 
-        email: user.email, 
-        role: user.role 
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role
       }
     });
 

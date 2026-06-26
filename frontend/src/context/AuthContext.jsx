@@ -29,23 +29,30 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-    const login = async (email, password) => {
+  const login = async (email, password) => {
     try {
-        const response = await api.post('/auth/login', { email, password });
-        localStorage.setItem('token', response.data.token);
-        setUser(response.data.user);
+      const response = await api.post('/auth/login', { email, password });
+      localStorage.setItem('token', response.data.token);
+      setUser(response.data.user);
     } catch (error) {
-        if (error.response) {
+      if (error.response) {
         throw error;
-        }
-        throw new Error("Error de red");
+      }
+      throw new Error("Error de red");
     }
-};
+  };
 
   const register = async (name, email, password, role) => {
-    const response = await api.post('/auth/register', { name, email, password, role });
-    localStorage.setItem('token', response.data.token);
-    setUser(response.data.user);
+    try {
+      const response = await api.post('/auth/register', { name, email, password, role });
+      localStorage.setItem('token', response.data.token);
+      setUser(response.data.user);
+    } catch (error) {
+      if (error.response) {
+        throw error;
+      }
+      throw new Error("Error de red");
+    }
   };
 
   const logout = () => {
