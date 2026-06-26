@@ -63,6 +63,12 @@ npm run dev
 ```
 
 ---
+### 4. Para loguearse como administrador
+
+```bash
+node reset-admin.js
+```
+Ingresar con usuario admin@university.edu y contraseña admin123.
 
 ## API Documentation
 
